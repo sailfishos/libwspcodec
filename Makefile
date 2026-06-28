@@ -47,7 +47,7 @@ RELEASE_BUILD_DIR = $(BUILD_DIR)/release
 # Tools and flags
 #
 
-CC = $(CROSS_COMPILE)gcc
+CC ?= $(CROSS_COMPILE)gcc
 LD = $(CC)
 WARNINGS = -Wall
 INCLUDES = -I$(SRC_DIR)

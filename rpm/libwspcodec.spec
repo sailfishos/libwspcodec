@@ -1,6 +1,6 @@
 Name: libwspcodec
 
-Version: 2.2.6
+Version: 2.2.7
 Release: 0
 Summary: WSP encoder and decoder library
 License: GPLv2
@@ -13,6 +13,9 @@ BuildRequires: glib2-devel >= 2.0
 # license macro requires rpm >= 4.11
 BuildRequires: pkgconfig(rpm)
 %define license_support %(pkg-config --exists 'rpm >= 4.11'; echo $?)
+
+# make_build macro appeared in rpm 4.12
+%{!?make_build:%define make_build make %{_smp_mflags}}
 
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -31,10 +34,9 @@ This package contains the development library for %{name}.
 %setup -q
 
 %build
-make LIBDIR=%{_libdir} KEEP_SYMBOLS=1 release pkgconfig
+%make_build LIBDIR=%{_libdir} KEEP_SYMBOLS=1 release pkgconfig
 
 %install
-rm -rf %{buildroot}
 make LIBDIR=%{_libdir} DESTDIR=%{buildroot} install-dev
 
 %post -p /sbin/ldconfig
